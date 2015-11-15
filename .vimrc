@@ -53,6 +53,15 @@ filetype on " we only need filetype instead of filetype indent
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_python_python_exec = '/usr/bin/python'
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 " --------------------------------------
 " vjde
 " let g:vjde_lib_path = "src/:lib/Jama-1.0.2.jar:lib/junit-4.10.jar:lib/patricia-trie-0.6.jar:pcj-1.2.jar:servlet-api.jar:whatwrong.jar"
