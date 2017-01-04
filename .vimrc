@@ -1,6 +1,9 @@
 set number
 syntax on
 
+" brighter comment! 
+highlight Comment ctermfg=darkgray
+
 " smart indent
 set smartindent
 " these are used for moses, where no <tab> is allowed and indent is 2 characters per level
@@ -90,13 +93,40 @@ let g:tex_flavor='latex'
 
 " --------------------------------------
 " youcompleteme
+
+"" color
+"highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+"highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+
+"" turn on completion in comments
+let g:ycm_complete_in_comments=1
+"" load ycm conf by default
+let g:ycm_confirm_extra_conf=0
+"" turn on tag completion
+let g:ycm_collect_identifiers_from_tags_files=1
+"" introduce C++ stdlib tags
+"set tags+=/data/misc/software/misc./vim/stdcpp.tags
+"" OmniCppComplete keymapping
+"inoremap <leader>; <C-x><C-o>
+"" only show completion as a list instead of a sub-window
+set completeopt-=preview
+"" start completion from the first character
+let g:ycm_min_num_of_chars_for_completion=1
+"" don't cache completion items
 let g:ycm_cache_omnifunc=0
+"" complete syntax keywords
+let g:ycm_seed_identifiers_with_syntax=1
+"" for python
+let g:ycm_python_binary_path='python'
+
 " If you prefer the Omni-Completion tip window to close when a selection is
 " made, these lines close it on movement in insert mode or when leaving
 " insert mode
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " --------------------------------------
 " ctags
-set tags=./tags,tags;$HOME
+set tags=tags;/
+"" auto generate tags
+"au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
