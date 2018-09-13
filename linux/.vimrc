@@ -1,7 +1,7 @@
 set number
 syntax on
 
-" brighter comment! 
+" brighter comment!
 highlight Comment ctermfg=darkgray
 
 " smart indent
@@ -13,10 +13,16 @@ set softtabstop=2
 " key mapping for toggling paste mode
 set pastetoggle=<F9>
 
-let g:miniBufExplMapWindowNavVim = 1 
-let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapCTabSwitchBufs = 1 
-let g:miniBufExplModSelTarget = 1
+" enable folding
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
+
+" let g:miniBufExplMapWindowNavVim = 1
+" let g:miniBufExplMapWindowNavArrows = 1
+" let g:miniBufExplMapCTabSwitchBufs = 1
+" let g:miniBufExplModSelTarget = 1
 
 " --------------------------------------
 " vundle
@@ -32,7 +38,7 @@ Plugin 'gmarik/vundle'
 " vim-scripts repos
 " Bundle 'vim-plugin-foo'
 " Bundle 'vim-plugin-bar'
-Bundle 'fholgado/minibufexpl.vim'
+" Bundle 'fholgado/minibufexpl.vim'
 Bundle 'wincent/Command-T'
 Bundle 'scrooloose/syntastic'
 Bundle 'MarcWeber/vim-addon-mw-utils.git'
@@ -43,18 +49,22 @@ Bundle 'majutsushi/tagbar'
 Bundle 'tomtom/tlib_vim.git'
 "Bundle 'klen/python-mode'
 Bundle 'Valloric/YouCompleteMe'
+"Bundle 'oblitum/YouCompleteMe'
 "Bundle 'davidhalter/jedi-vim'
 "Bundle 'cespare/vjde'
 Bundle 'jcf/vim-latex'
 Bundle 'oplatek/Conque-Shell'
+Bundle 'vim-airline/vim-airline'
+Bundle 'vim-airline/vim-airline-themes'
+Bundle 'vchahun/vim-ducttape'
 call vundle#end()
 " filetype plugin indent on " required!
-filetype on " we only need filetype instead of filetype indent
+filetype plugin on " we only need filetype instead of filetype indent
 
 " --------------------------------------
 " syntastic
 let g:syntastic_java_javac_config_file_enabled = 1
-let g:syntastic_python_python_exec = '/usr/bin/python'
+let g:syntastic_python_python_exec = 'python'
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -64,6 +74,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_python_flake8_args='--ignore=E501,E225,E111,E114,E302,E303'
 
 " --------------------------------------
 " vjde
@@ -109,7 +122,7 @@ let g:ycm_collect_identifiers_from_tags_files=1
 "" OmniCppComplete keymapping
 "inoremap <leader>; <C-x><C-o>
 "" only show completion as a list instead of a sub-window
-set completeopt-=preview
+set completeopt+=preview
 "" start completion from the first character
 let g:ycm_min_num_of_chars_for_completion=1
 "" don't cache completion items
@@ -125,8 +138,20 @@ let g:ycm_python_binary_path='python'
 "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+" for oblitum's branch
+" set ttimeoutlen=50  " for faster InsertLeave triggering
+
 " --------------------------------------
 " ctags
 set tags=tags;/
 "" auto generate tags
 "au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
+
+" --------------------------------------
+" airline
+let g:airline_powerline_fonts=1
+let g:airline_theme='luna'
+let g:powerline_symbols='unicode'
+let g:airline#extensions#tabline#enabled=2
+nmap <C-n> :bn<CR>
+
