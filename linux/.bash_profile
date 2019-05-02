@@ -4,8 +4,8 @@ export LIBRARY_PATH="/home/shuoyangd/local/lib":"/home/shuoyangd/local/lib64"
 # GPU-relevant library settings
 # export CUDA_HOME="/opt/NVIDIA/cuda-7.5" # specifically use 7.5
 export HDF5_DIR="/home/shuoyangd/local/hdf5"
-export CUDA_HOME="/usr/local/cuda"
-export CUDA_VISIBLE_DEVICES="0,1,2,3"
+export CUDA_HOME="/opt/NVIDIA/cuda-9.0"
+# export CUDA_VISIBLE_DEVICES="0,1,2,3"
 # export CPATH="/home/shuoyangd/local/lib/cudnn/include":$CPATH # enable cudnn
 # export LIBRARY_PATH="/home/shuoyangd/local/lib/cudnn/lib64":$LIBRARY_PATH # enable cudnn
 # export LD_LIBRARY_PATH="/home/shuoyangd/local/lib/cudnn/lib64":"$CUDA_HOME/lib64":$LD_LIBRARY_PATH # enable cudnn
@@ -21,16 +21,20 @@ export BOOST_LIBRARYDIR="/home/shuoyangd/local/lib"
 export BOOST_ROOT="/home/shuoyangd/local/pkg/boost_1_58_0"
 
 export CPLUS_INCLUDE_PATH="/home/shuoyangd/local/lib"
-# export PYTHONPATH="/home/shuoyangd/ursus"
+export PYTHONPATH="/home/shuoyangd/local/pkg/faiss/python"
 
 export JAVA_HOME=/home/shuoyangd/local/lib/jdk1.8.0_73
 
-export PATH="$HOME/.linuxbrew/bin:$PATH"  # linux brew comes after local and others
+export CORENLP_HOME=/export/b18/shuoyangd/software/stanford-corenlp
+
+export PATH=$HOME/.linuxbrew/bin:$PATH  # linux brew comes after local and others
 export PATH=/home/shuoyangd/local/bin:/home/shuoyangd/srilm/bin:/home/shuoyangd/srilm/bin/i686-m64:$PATH
 export PATH=$JAVA_HOME/bin:$PATH
 export PATH=$CUDA_HOME/bin:$PATH
-export PATH=$PATH:/export/b18/shuoyangd/software/ducttape-0.3 # add ducttape
+# export PATH=$PATH:/export/b18/shuoyangd/software/ducttape-0.3 # add ducttape
+export PATH=$PATH:/export/b18/shuoyangd/software/ducttape-0.4:/home/shuoyangd/tmp/ducttape # add ducttape
 export PATH=/home/shuoyangd/local/pkg/gcc-5.4.0/bin:$PATH
+# export PATH=$PATH:$HOME/.linuxbrew/bin  # linux brew comes after local and others
 
 MANPATH="$(brew --prefix)/share/man:$MANPATH"
 MANPATH=$MANPATH:~/srilm/man
@@ -38,8 +42,9 @@ export MANPATH
 
 export INFOPATH="$(brew --prefix)/share/info:$INFOPATH"
 
-# export LANG=en_US.UTF-8
-
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
 
 # ==============================================================================
 # some alias for easy usage
@@ -58,8 +63,20 @@ alias syntax="screen -r syntax"
 # virtualenv
 alias kenlmenv="source /home/shuoyangd/pyenv/kenlm/bin/activate"
 alias tnenv="source /home/shuoyangd/pyenv/theano/bin/activate"
+
+## base python 2/3 environtment
 alias py2env="source /home/shuoyangd/pyenv/py2torch/bin/activate"
 alias py3env="source /home/shuoyangd/pyenv/py3/bin/activate"
+
+## pytorch environments
+alias py3tenv="source /home/shuoyangd/pyenv/py3t/bin/activate"  # default pytorch
+alias py3t4env="source /home/shuoyangd/pyenv/py3t4/bin/activate"  # pytorch 0.4
+alias py3tbenv="source /home/shuoyangd/pyenv/py3tb/bin/activate"  # pytorch bleeding
+
+## mxnet environment
+alias py3mxenv="source /home/shuoyangd/pyenv/py3mx/bin/activate"
+
+## dev torch environment
 alias tdenv="source /home/shuoyangd/pyenv/torch-dev/bin/activate"
 
 # source ~/pyenv/pexpect/bin/activate
@@ -77,6 +94,12 @@ export PROMPT_COMMAND="${SAVEBASH};${SAVEBASHLOCAL}"
 # added for anaconda 3
 # touches root environtment, evil.
 # export PATH=/export/b18/shuoyangd/software/anaconda3/bin:$PATH
+
+# fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# add display info
+export DISPLAY=localhost:0
 
 # ==============================================================================
 # make everything colorful (copied from https://unix.stackexchange.com/a/178816)
@@ -139,7 +162,7 @@ if ls -ld --color=auto / >/dev/null 2>&1
 fi
 
 # ==============================================================================
-# grc 
+# grc
 # using this as a variable allows easier calling down lower
 export GRC='grc -es --colour=auto'
 
@@ -178,9 +201,9 @@ ll() {
 #!/usr/bin/perl
 # use strict;
 # use warnings;
-# 
+#
 # open (DIFF, "-|", "diff", @ARGV) or die $!;
-# 
+#
 # my $ydiff = 1;
 # while (<DIFF>) {
 #   if (not -t 1) {
@@ -203,6 +226,7 @@ ll() {
 # bash prompt
 
 export PS1="\[\e[0;32m\]\u@\h:\W ﷽            \[\e[0m\]"
+# export PS1="\[\e[0;32m\]\u@\h:\W ﷽    \[\e[0m\]"
 
 # Shorten home dir, cygwin drives, paths that are too long
 # if [ -d /cygdrive ] && uname -a |grep -qi cygwin; then CYGWIN_OS=1; fi

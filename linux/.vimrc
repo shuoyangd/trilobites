@@ -5,11 +5,12 @@ syntax on
 highlight Comment ctermfg=darkgray
 
 " smart indent
+set autoindent
 set smartindent
 " these are used for moses, where no <tab> is allowed and indent is 2 characters per level
 set expandtab
+set tabstop=2
 set shiftwidth=2
-set softtabstop=2
 " key mapping for toggling paste mode
 set pastetoggle=<F9>
 
@@ -29,11 +30,11 @@ set foldlevel=2
 set nocompatible " be iMproved
 filetype off " required!
 
-set rtp+=~/.vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " let Vundle manage Vundle
 " required!
-Plugin 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " vim-scripts repos
 " Bundle 'vim-plugin-foo'
@@ -57,12 +58,21 @@ Bundle 'oplatek/Conque-Shell'
 Bundle 'vim-airline/vim-airline'
 Bundle 'vim-airline/vim-airline-themes'
 Bundle 'vchahun/vim-ducttape'
+Bundle 'Yggdroot/indentLine'
+Bundle 'aperezdc/vim-template'
+Bundle 'tpope/vim-fugitive'
 call vundle#end()
 " filetype plugin indent on " required!
 filetype plugin on " we only need filetype instead of filetype indent
 
 " --------------------------------------
+" nerdtree
+"
+nmap <F6> :NERDTreeToggle<CR>
+
+" --------------------------------------
 " syntastic
+"
 let g:syntastic_java_javac_config_file_enabled = 1
 let g:syntastic_python_python_exec = 'python'
 
@@ -148,10 +158,109 @@ set tags=tags;/
 "au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
 
 " --------------------------------------
+" ConqueTerm
+nmap <F5> :ConqueTermSplit bash<CR>
+
+" --------------------------------------
 " airline
 let g:airline_powerline_fonts=1
 let g:airline_theme='luna'
 let g:powerline_symbols='unicode'
 let g:airline#extensions#tabline#enabled=2
+nmap <C-p> :bp<CR>
 nmap <C-n> :bn<CR>
 
+" --------------------------------------
+"  " indent-guides
+" let g:indent_guides_enable_on_vim_startup = 1
+" set ts=4 sw=4 et
+" let g:indent_guides_start_level=2
+" let g:indent_guides_guide_size=1
+
+" let g:indent_guides_auto_colors = 0
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=black
+
+" --------------------------------------
+" indent line
+" Vim
+let g:indentLine_color_term = 240
+
+" GVim
+let g:indentLine_color_gui = '#A4E57E'
+
+" prettify
+let g:indentLine_char = '▏'
+" let g:indentLine_char = ''
+
+" toggle indent lines on and off
+nmap <C-i> :IndentLinesToggle<CR>
+
+" --------------------------------------
+" template
+"
+let g:templates_directory='/home/shuoyangd/.vim/templates'
+let g:email='shuoyangd@gmail.com'
+let g:user='Shuoyang Ding'
+
+" --------------------------------------
+" tagbar
+"
+nmap <F8> :TagbarToggle<CR>
+
+
+" --------------------------------------
+" fzf
+"
+set rtp+=/home/shuoyangd/local/pkg/fzf
+nmap <F7> :FZF<CR>
+
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+" let g:fzf_layout = { 'downk': '~40%' }
+
+" You can set up fzf window using a Vim command (Neovim or latest Vim 8 required)
+" let g:fzf_layout = { 'window': 'enew' }
+" let g:fzf_layout = { 'window': '-tabnew' }
+" let g:fzf_layout = { 'window': '10split enew' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Label'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
